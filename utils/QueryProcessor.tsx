@@ -1,3 +1,19 @@
+// Square-and-multiply, since tsconfig targets es5 and `**` isn't allowed on bigint
+function bigPow(base: bigint, exponent: bigint): bigint {
+  const zero = BigInt(0);
+  const one = BigInt(1);
+  const two = BigInt(2);
+  let result = one;
+  while (exponent > zero) {
+    if (exponent % two === one) {
+      result *= base;
+    }
+    base *= base;
+    exponent /= two;
+  }
+  return result;
+}
+
 // Evaluates expressions like "81 plus 38 plus 66" or "90 to the power of 82".
 // Uses BigInt so large powers stay exact. Returns null if it isn't arithmetic.
 function evaluateArithmetic(expression: string): string | null {
@@ -29,7 +45,7 @@ function evaluateArithmetic(expression: string): string | null {
     const base = parseNumber();
     if (tokens[pos] === "^") {
       pos++;
-      return base ** parsePower();
+      return bigPow(base, parsePower());
     }
     return base;
   };
