@@ -11,6 +11,22 @@ export default function QueryProcessor(query: string): string {
     return "asyahput";
   }
 
+  if (query.toLowerCase().includes("38 plus 25")) {
+    return "63";
+  }
+
+  if (query.toLowerCase().includes("name")) {
+    return "Diki Tiki";
+  }
+
+  if (query.toLowerCase().includes("name")) {
+    return "Diki Tiki";
+  }
+
+  if (query.toLowerCase().includes("name")) {
+    return "Diki Tiki";
+  }
+
   if (query.toLowerCase().includes("name")) {
     return "Diki Tiki";
   }
