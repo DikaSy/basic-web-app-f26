@@ -124,6 +124,18 @@ export default function QueryProcessor(query: string): string {
     return numbers.filter(isPrime).join(", ");
   }
 
+  // e.g. "Which of the following is an anagram of listen: google, inlets, banana, enlists?"
+  const anagramMatch = lower.match(/anagram of (\w+):\s*(.+?)\??$/);
+  if (anagramMatch) {
+    const sortLetters = (word: string) => word.split("").sort().join("");
+    const target = sortLetters(anagramMatch[1]);
+    return anagramMatch[2]
+      .split(",")
+      .map((word) => word.trim())
+      .filter((word) => word !== anagramMatch[1] && sortLetters(word) === target)
+      .join(", ");
+  }
+
   if (lower.includes("name")) {
     return "Diki Tiki";
   }
