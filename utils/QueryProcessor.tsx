@@ -124,6 +124,24 @@ export default function QueryProcessor(query: string): string {
     return numbers.filter(isPrime).join(", ");
   }
 
+  // e.g. "What is the scrabble score of banana?"
+  const scrabbleMatch = lower.match(/scrabble score of (\w+)/);
+  if (scrabbleMatch) {
+    const letterScores: { [letter: string]: number } = {};
+    const groups: [string, number][] = [
+      ["aeioulnstr", 1], ["dg", 2], ["bcmp", 3], ["fhvwy", 4],
+      ["k", 5], ["jx", 8], ["qz", 10],
+    ];
+    groups.forEach(([letters, score]) =>
+      letters.split("").forEach((letter) => (letterScores[letter] = score))
+    );
+    return String(
+      scrabbleMatch[1]
+        .split("")
+        .reduce((total, letter) => total + (letterScores[letter] || 0), 0)
+    );
+  }
+
   // e.g. "Which of the following is an anagram of listen: google, inlets, banana, enlists?"
   const anagramMatch = lower.match(/anagram of (\w+):\s*(.+?)\??$/);
   if (anagramMatch) {
