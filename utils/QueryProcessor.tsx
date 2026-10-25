@@ -1,5 +1,7 @@
 export default function QueryProcessor(query: string): string {
-  if (query.toLowerCase().includes("shakespeare")) {
+  const lower = query.toLowerCase();
+
+  if (lower.includes("shakespeare")) {
     return (
       "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
       "English poet, playwright, and actor, widely regarded as the greatest " +
@@ -7,35 +9,31 @@ export default function QueryProcessor(query: string): string {
     );
   }
 
-  if (query.toLowerCase().includes("andrew id")) {
+  if (lower.includes("andrew id")) {
     return "asyahput";
   }
 
-  if (query.toLowerCase().includes("38 plus 25")) {
-    return "63";
+  // e.g. "What is 89 plus 87?"
+  const plusMatch = lower.match(/(-?\d+)\s+plus\s+(-?\d+)/);
+  if (plusMatch) {
+    return String(parseInt(plusMatch[1]) + parseInt(plusMatch[2]));
   }
 
-  if (query.toLowerCase().includes("name")) {
+  // e.g. "Which of the following numbers is the largest: 54, 47, 90?"
+  if (lower.includes("largest")) {
+    const numbers = (lower.match(/-?\d+/g) || []).map(Number);
+    if (numbers.length > 0) {
+      return String(Math.max(...numbers));
+    }
+  }
+
+  if (lower.includes("name")) {
     return "Diki Tiki";
   }
 
-  if (query.toLowerCase().includes("name")) {
-    return "Diki Tiki";
-  }
-
-  if (query.toLowerCase().includes("name")) {
-    return "Diki Tiki";
-  }
-
-  if (query.toLowerCase().includes("name")) {
-    return "Diki Tiki";
-  }
-
-  if (query.toLowerCase().includes("age")) {
+  if (lower.includes("age")) {
     return "67";
   }
-
-
 
   return "";
 }
